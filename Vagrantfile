@@ -11,6 +11,10 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "jenkins" do |jenkins|
     jenkins.vm.network "private_network", ip: "192.168.33.10"
+    jenkins.vm.provider "virtualbox" do |vb|
+        vb.gui = true
+        vb.memory = 3072
+    end
     jenkins.vm.provision "shell", inline: <<-SHELL
         apt update
         wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | apt-key add -
@@ -41,7 +45,8 @@ Vagrant.configure("2") do |config|
   config.vm.define "zap" do |zap|
     zap.vm.network "private_network", ip: "192.168.33.12"
     zap.vm.provider "virtualbox" do |vb|
-     vb.gui = true
+        vb.gui = true
+        vb.memory = 2048
     end
 
     zap.vm.provision "shell", inline: <<-SHELL
